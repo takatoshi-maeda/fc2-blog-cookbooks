@@ -1,0 +1,21 @@
+<?php
+
+//error_reporting(-1);
+error_reporting(0);
+
+// 直接呼び出された場合は終了
+if (count(get_included_files())==1) {
+  exit;
+}
+
+define('DB_HOST',     'localhost');
+define('DB_USER',     'fc2-blog');
+define('DB_PASSWORD', '<%= node['fc2-blog']['database']['password'] %>');
+define('DB_DATABASE', 'fc2-blog');
+define('DB_CHARSET',  'UTF8');
+
+define('DOMAIN',        'localhost');
+define('PASSWORD_SALT', '<%= node['fc2-blog']['password_salt'] %>');
+
+define('WWW_DIR', dirname(__FILE__) . '/');
+require(dirname(__FILE__) . '/../app/core/bootstrap.php');

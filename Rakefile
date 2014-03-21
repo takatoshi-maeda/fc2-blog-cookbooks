@@ -1,11 +1,18 @@
-task :setup do
-  system 'berks', 'install', '--path=./cookbooks'
+task :bootstrap do |task, args|
+  Rake::Task[:setup].invoke
+  Rake::Task[:prepare].invoke
+  Rake::Task[:apply].invoke
 end
 
-task :prepare, :node_name do |task, args|
+task :setup do |task, args|
+  system 'bundle', 'exec', 'berks', 'install', '--path=./cookbooks'
+  system 'vagrant', 'up'
+end
+
+task :prepare do |task, args|
   system 'bundle', 'exec', 'knife', 'solo', 'prepare', '-i', "#{ENV["HOME"]}/.vagrant.d/insecure_private_key", 'vagrant@192.168.33.10'
 end
 
-task :apply, :node_name do |task, args|
-  system 'bundle', 'exec', 'knife', 'solo', 'cook', 'vagrant@192.168.33.10', '-i', "#{ENV["HOME"]}/.vagrant.d/insecure_private_key", '-N', args.node_name
+task :apply do |task, args|
+  system 'bundle', 'exec', 'knife', 'solo', 'cook', 'vagrant@192.168.33.10', '-i', "#{ENV["HOME"]}/.vagrant.d/insecure_private_key", '-N', 'fc2blog'
 end

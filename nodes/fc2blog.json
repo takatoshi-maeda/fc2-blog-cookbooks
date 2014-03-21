@@ -1,0 +1,62 @@
+{
+  "run_list": [
+    "recipe[build-essential-patch]",
+    "recipe[users]",
+    "recipe[users::sysadmins]",
+    "recipe[sudo]",
+    "recipe[mysql::server]",
+    "recipe[php]",
+    "recipe[php-fpm]",
+    "recipe[nginx]",
+    "recipe[fc2-blog]"
+  ],
+  "fc2-blog": {
+    "database": {
+      "user": "", // please set
+      "password": "", // please set
+      "name": "" // please set
+    },
+    "password_salt": "" // please set
+  },
+  "authorization": {
+    "sudo": {
+      "groups": [ "sysadmin" ],
+      "users": [ "vagrant" ],
+      "passwordless": "true"
+    }
+  },
+  "mysql": {
+    "server_root_password": "", // please set
+    "server_repl_password": "", // please set
+    "server_debian_password": "" // please set
+  },
+  "php-fpm": {
+    "user": "nginx",
+    "group": "nginx",
+    "pools": [
+      {
+        "name": "fc2-blog",
+        "catch_workers_output": "yes",
+        "php_options": {
+          "php_admin_flag[log_errors]": "on",
+          "php_admin_value[error_log]": "/var/log/php-fpm/fc2-blog.error.log"
+        }
+      }
+    ]
+  },
+  "php": {
+    "packages": [
+      "php",
+      "php-devel",
+      "php-cli",
+      "php-pear",
+      "php-mbstring",
+      "php-pdo",
+      "php-mysql",
+      "php-gd"
+    ]
+  },
+  "nginx": {
+    "default_site_enabled": false
+  }
+}

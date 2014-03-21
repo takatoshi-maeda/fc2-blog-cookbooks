@@ -6,7 +6,9 @@
       "ref": "14943e4f1a0b541bb7cf2187f5100df24f97dfc8"
     },
     "build-essential": {
-      "locked_version": "2.0.0"
+      "locked_version": "2.0.1",
+      "git": "https://github.com/opscode-cookbooks/build-essential",
+      "ref": "4d9f91c101588ab5292259fd06c1b50d935b7f73"
     },
     "users": {
       "locked_version": "1.7.0"
@@ -31,6 +33,9 @@
     },
     "mysql": {
       "locked_version": "4.1.2"
+    },
+    "database": {
+      "locked_version": "2.0.0"
     },
     "apt": {
       "locked_version": "2.3.8"
@@ -70,6 +75,15 @@
     },
     "homebrew": {
       "locked_version": "1.5.4"
+    },
+    "postgresql": {
+      "locked_version": "3.3.4"
+    },
+    "aws": {
+      "locked_version": "2.1.1"
+    },
+    "xfs": {
+      "locked_version": "1.1.0"
     }
   }
 }

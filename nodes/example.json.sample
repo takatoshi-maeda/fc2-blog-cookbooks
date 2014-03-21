@@ -1,0 +1,63 @@
+{
+  "run_list": [
+    "recipe[build-essential-patch]",
+    "recipe[users]",
+    "recipe[users::sysadmins]",
+    "recipe[sudo]",
+    "recipe[mysql::server]",
+    "recipe[php]",
+    "recipe[php-fpm]",
+    "recipe[nginx]",
+    "recipe[fc2-blog]"
+  ],
+  "fc2-blog": {
+    "database": {
+      "user": "fc2-blog",
+      "password": "fc2-blog",
+      "name": "fc2-blog"
+    },
+    "password_salt": "c4670e290d3d82d8bf7e14b0c71083bb"
+  },
+  "authorization": {
+    "sudo": {
+      "groups": [ "sysadmin" ],
+      "users": [ "vagrant" ],
+      "passwordless": "true"
+    }
+  },
+  "mysql": {
+    "server_root_password": "2770534f7b133a83043b6d256db5538e",
+    "server_repl_password": "2770534f7b133a83043b6d256db5538e",
+    "server_debian_password": "2770534f7b133a83043b6d256db5538e"
+  },
+  "php-fpm": {
+    "user": "nginx",
+    "group": "nginx",
+    "log_level": "debug",
+    "pools": [
+      {
+        "name": "fc2-blog",
+        "catch_workers_output": "yes",
+        "php_options": {
+          "php_admin_flag[log_errors]": "on",
+          "php_admin_value[error_log]": "/var/log/php-fpm/fc2-blog.error.log"
+        }
+      }
+    ]
+  },
+  "php": {
+    "packages": [
+      "php",
+      "php-devel",
+      "php-cli",
+      "php-pear",
+      "php-mbstring",
+      "php-pdo",
+      "php-mysql",
+      "php-gd"
+    ]
+  },
+  "nginx": {
+    "default_site_enabled": false
+  }
+}

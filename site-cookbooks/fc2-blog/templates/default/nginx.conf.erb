@@ -1,0 +1,27 @@
+upstream php-fpm {
+  server unix:/var/run/php-fpm-fc2-blog.sock;
+}
+
+server {
+  listen   80;
+  server_name _;
+  root        /var/www/html/fc2-blog/public;
+  index       index.php index.html index.htm;
+
+  access_log  /var/log/nginx/fc2-blog.access.log;
+
+  location /admin {
+    try_files $uri $uri/ /admin/index.php?$args;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.php?$args;
+  }
+
+  location ~ \.php {
+    include fastcgi_params;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass php-fpm;
+  }
+}
